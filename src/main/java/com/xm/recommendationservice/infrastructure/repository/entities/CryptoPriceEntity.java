@@ -6,7 +6,9 @@ import lombok.*;
 import java.time.Instant;
 
 @Entity
-@Table(name = "crypto_prices")
+@Table(name = "crypto_prices", uniqueConstraints = {
+        @UniqueConstraint(columnNames = { "symbol", "timestamp" })
+})
 @Getter
 @Setter
 @Builder
