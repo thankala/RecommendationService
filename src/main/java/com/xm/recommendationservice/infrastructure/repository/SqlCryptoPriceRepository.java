@@ -2,7 +2,6 @@ package com.xm.recommendationservice.infrastructure.repository;
 
 import java.util.List;
 
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 import com.xm.recommendationservice.domain.CryptoPrice;
