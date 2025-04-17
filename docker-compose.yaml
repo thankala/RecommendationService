@@ -1,0 +1,22 @@
+services:
+  # Using latest here but in production i would pin the version
+  postgres:
+    image: postgres:latest
+    container_name: cryptodb
+    environment:
+      POSTGRES_DB: cryptodb
+      POSTGRES_USER: xm
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+      image: dpage/pgadmin4
+      container_name: pgadmin
+      environment:
+        PGADMIN_DEFAULT_EMAIL: admin@admin.com
+        PGADMIN_DEFAULT_PASSWORD: admin
+      ports:
+        - "5080:80"
+      depends_on:
+        - postgres
