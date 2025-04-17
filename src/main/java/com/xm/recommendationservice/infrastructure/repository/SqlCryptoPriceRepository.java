@@ -2,11 +2,14 @@ package com.xm.recommendationservice.infrastructure.repository;
 
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 import com.xm.recommendationservice.domain.CryptoPrice;
 import com.xm.recommendationservice.domain.CryptoPriceRepository;
+import com.xm.recommendationservice.infrastructure.repository.entities.CryptoPriceEntity;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,12 +36,18 @@ public class SqlCryptoPriceRepository implements CryptoPriceRepository {
     }
 
     @Override
+    @Transactional
     public List<CryptoPrice> saveAll(List<CryptoPrice> prices) {
-        return repository.saveAll(prices.stream()
+        return prices.stream()
                 .map(mapper::to)
-                .toList()).stream()
+                .map(this::insertIfNotExists)
                 .map(mapper::to)
                 .toList();
     }
 
+    private CryptoPriceEntity insertIfNotExists(CryptoPriceEntity price) {
+        repository.insertIfNotExists(price.getTimestamp(), price.getSymbol(),
+                price.getPrice());
+        return price;
+    }
 }
