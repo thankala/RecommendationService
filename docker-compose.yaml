@@ -20,6 +20,15 @@ services:
         - "5080:80"
       depends_on:
         - postgres
+  valkey:
+    image: docker.io/bitnami/valkey:8.1
+    container_name: valkey
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - VALKEY_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+    ports:
+      - '6379:6379'
   # crypto-app:
   #   build:
   #     context: .
@@ -32,6 +41,7 @@ services:
   #   # environment:
   #   #   - CRYPTO_PRICES_PATH=/target/classes/prices
   #   environment:
-  #     DB_HOST: cryptodb
+  #     DB_HOST: postgres
+  #     REDIS_HOST: valkey
   #   depends_on:
   #     - postgres
