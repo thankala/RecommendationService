@@ -27,16 +27,13 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class IpThrottlingFilter implements Filter {
-
-    private final RedissonBasedProxyManager<String> proxyManager;
-
     private static final BucketConfiguration configuration = BucketConfiguration.builder()
             .addLimit(limit -> limit.capacity(10).refillGreedy(10, Duration.ofMinutes(1)))
             .build();
+            
+    private final RedissonBasedProxyManager<String> proxyManager;
 
-    // Add this to your class
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
