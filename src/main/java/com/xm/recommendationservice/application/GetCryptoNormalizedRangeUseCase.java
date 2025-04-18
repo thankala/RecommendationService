@@ -54,13 +54,14 @@ public class GetCryptoNormalizedRangeUseCase {
     }
 
     public CryptoNormalizedRange getTopCryptoByNormalizedRangeForDay(LocalDate date) {
+        if (date == null) {
+            throw new InvalidParameterException("Date must be provided");
+        }
+
         Instant start = date.atStartOfDay().toInstant(ZoneOffset.UTC);
         Instant end = date.plusDays(1).atStartOfDay().toInstant(ZoneOffset.UTC);
 
         List<CryptoPrice> prices = repository.findAllByTimestampBetween(start, end);
-        if (prices.isEmpty()) {
-            throw new NoSuchElementException("No data for date: " + date);
-        }
 
         Map<String, List<CryptoPrice>> grouped = prices.stream()
                 .collect(Collectors.groupingBy(CryptoPrice::getSymbol));
