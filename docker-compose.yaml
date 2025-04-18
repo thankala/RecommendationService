@@ -20,3 +20,18 @@ services:
         - "5080:80"
       depends_on:
         - postgres
+  # crypto-app:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: recommendation-app
+  #   ports:
+  #     - "8080:8080"
+  #   # volumes:
+  #   #   - ./src/main/resources/prices:/target/classes/prices
+  #   # environment:
+  #   #   - CRYPTO_PRICES_PATH=/target/classes/prices
+  #   environment:
+  #     DB_HOST: cryptodb
+  #   depends_on:
+  #     - postgres

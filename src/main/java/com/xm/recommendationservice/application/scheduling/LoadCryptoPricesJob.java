@@ -5,7 +5,6 @@ import com.xm.recommendationservice.domain.CryptoPriceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -26,13 +25,13 @@ public class LoadCryptoPricesJob {
 
     private final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
-    @Value("classpath:prices")
-    private Resource pricesFolder;
+    @Value("${crypto.loader.folder}")
+    private String pricesFolderPath;
 
-    @Scheduled(initialDelay = 1000, fixedRate = Long.MAX_VALUE) // Runs once after 1s
+    @Scheduled(initialDelay = 1000, fixedRate = 60 * 60 * 1000) // Runs once after 1s and then every hour
     public void loadAllCsvFilesAsync() {
         try {
-            Path folderPath = pricesFolder.getFile().toPath();
+            Path folderPath = Paths.get(pricesFolderPath);
 
             List<CompletableFuture<Void>> futures = new ArrayList<>();
 
