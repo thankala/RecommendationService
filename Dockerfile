@@ -13,7 +13,7 @@ WORKDIR /app
 COPY --from=builder /build/target/RecommendationService-*.jar app.jar
 COPY --from=builder /build/target/classes/prices prices/
 
-ENV CRYPTO_PRICES_FOLDER_PATH=/app
+ENV CRYPTO_PRICES_FOLDER_PATH=/app/prices
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
     

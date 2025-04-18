@@ -2,7 +2,7 @@ services:
   # Using latest here but in production i would pin the version
   postgres:
     image: postgres:latest
-    container_name: cryptodb
+    container_name: postgres
     environment:
       POSTGRES_DB: cryptodb
       POSTGRES_USER: xm
@@ -29,19 +29,19 @@ services:
       - VALKEY_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
     ports:
       - '6379:6379'
-  # crypto-app:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   container_name: recommendation-app
-  #   ports:
-  #     - "8080:8080"
-  #   # volumes:
-  #   #   - ./src/main/resources/prices:/target/classes/prices
-  #   # environment:
-  #   #   - CRYPTO_PRICES_PATH=/target/classes/prices
-  #   environment:
-  #     DB_HOST: postgres
-  #     REDIS_HOST: valkey
-  #   depends_on:
-  #     - postgres
+  crypto-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: recommendation-app
+    ports:
+      - "8080:8080"
+    # volumes:
+    #   - ./src/main/resources/prices:/differentpath
+    # environment:
+    #   - CRYPTO_PRICES_FOLDER_PATH=/differentpath
+    environment:
+      DB_HOST: postgres
+      REDIS_HOST: valkey
+    depends_on:
+      - postgres

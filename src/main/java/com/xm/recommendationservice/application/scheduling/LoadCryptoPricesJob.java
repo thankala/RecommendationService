@@ -32,6 +32,7 @@ public class LoadCryptoPricesJob {
     public void loadAllCsvFilesAsync() {
         try {
             Path folderPath = Paths.get(pricesFolderPath);
+            log.info("Scanning folder: {}", folderPath);
 
             List<CompletableFuture<Void>> futures = new ArrayList<>();
 
