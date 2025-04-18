@@ -10,7 +10,6 @@ import io.github.bucket4j.Bucket;
 import io.github.bucket4j.BucketConfiguration;
 import io.github.bucket4j.redis.redisson.cas.RedissonBasedProxyManager;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,7 +29,7 @@ public class IpThrottlingFilter implements Filter {
     private static final BucketConfiguration configuration = BucketConfiguration.builder()
             .addLimit(limit -> limit.capacity(10).refillGreedy(10, Duration.ofMinutes(1)))
             .build();
-            
+
     private final RedissonBasedProxyManager<String> proxyManager;
 
     private final ObjectMapper objectMapper;
