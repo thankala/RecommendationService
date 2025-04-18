@@ -22,10 +22,6 @@ public class GetCryptoStatsUseCase {
     public CryptoStats getStatsForCrypto(String symbol, LocalDate startDate, LocalDate endDate) {
         // Get oldest/newest/min/max prices for a symbol
 
-        if (startDate.isAfter(endDate)) {
-            throw new IllegalArgumentException("Start date cannot be after end date");
-        }
-
         List<CryptoPrice> prices = List.of();
 
         if (startDate == null || endDate == null) {

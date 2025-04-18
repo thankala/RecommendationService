@@ -28,8 +28,8 @@ public class CryptoController {
     // Get oldest/newest/min/max for a specific crypto
     @GetMapping("/{symbol}/stats")
     public CryptoStats getStatsForCrypto(@PathVariable String symbol,
-            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+            @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         return getCryptoStatsUseCase.getStatsForCrypto(symbol, startDate, endDate);
     }
 
