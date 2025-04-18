@@ -1,5 +1,6 @@
 package com.xm.recommendationservice.application;
 
+import java.security.InvalidParameterException;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.Collections;
@@ -24,12 +25,14 @@ public class GetCryptoStatsUseCase {
 
         List<CryptoPrice> prices = List.of();
 
-        if (startDate == null || endDate == null) {
+        if (startDate == null && endDate == null) {
             prices = repository.findAllBySymbol(symbol);
         } else if (startDate != null && endDate != null) {
             prices = repository.findAllBySymbolAndTimestampBetween(symbol,
                     startDate.atStartOfDay().toInstant(ZoneOffset.UTC),
                     endDate.plusDays(1).atStartOfDay().toInstant(ZoneOffset.UTC));
+        } else if (startDate != null || endDate != null) {
+            throw new InvalidParameterException("Both start and end dates must be provided");
         }
 
         if (prices.isEmpty()) {

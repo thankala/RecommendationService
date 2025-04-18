@@ -25,9 +25,10 @@ public class CryptoController {
     private final GetCryptoStatsUseCase getCryptoStatsUseCase;
     private final GetCryptoNormalizedRangeUseCase getCryptoNormalizedRangeUseCase;
 
-    // Get oldest/newest/min/max for a specific crypto
+    // Get oldest/newest/min/max for a specific crypto (optional between dates)
     @GetMapping("/{symbol}/stats")
-    public CryptoStats getStatsForCrypto(@PathVariable String symbol,
+    public CryptoStats getStatsForCrypto(
+            @PathVariable String symbol,
             @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         return getCryptoStatsUseCase.getStatsForCrypto(symbol, startDate, endDate);
@@ -40,9 +41,12 @@ public class CryptoController {
         return getCryptoNormalizedRangeUseCase.getTopCryptoByNormalizedRangeForDay(date);
     }
 
+     // Get all cryptos normalized sorted by  (optional between dates)
     @GetMapping("/normalized-range")
-    public List<CryptoNormalizedRange> getAllSortedByNormalizedRange() {
-        return getCryptoNormalizedRangeUseCase.getAllNormalizedRanges();
+    public List<CryptoNormalizedRange> getAllSortedByNormalizedRange(
+            @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        return getCryptoNormalizedRangeUseCase.getAllNormalizedRanges(startDate, endDate);
     }
 
 }

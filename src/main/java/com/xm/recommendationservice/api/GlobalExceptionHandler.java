@@ -1,5 +1,6 @@
 package com.xm.recommendationservice.api;
 
+import java.security.InvalidParameterException;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +16,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<Map<String, Object>> handleIllegalArgument(NoSuchElementException ex) {
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidParameterException.class)
+    public ResponseEntity<Map<String, Object>> handleInvalidParameter(InvalidParameterException ex) {
         return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
