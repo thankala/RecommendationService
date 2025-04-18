@@ -1,5 +1,7 @@
 package com.xm.recommendationservice.application;
 
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -17,9 +19,22 @@ import lombok.RequiredArgsConstructor;
 public class GetCryptoStatsUseCase {
     private final CryptoPriceRepository repository;
 
-    public CryptoStats getStatsForCrypto(String symbol) {
+    public CryptoStats getStatsForCrypto(String symbol, LocalDate startDate, LocalDate endDate) {
         // Get oldest/newest/min/max prices for a symbol
-        List<CryptoPrice> prices = repository.findAllBySymbol(symbol);
+
+        if (startDate.isAfter(endDate)) {
+            throw new IllegalArgumentException("Start date cannot be after end date");
+        }
+
+        List<CryptoPrice> prices = List.of();
+
+        if (startDate == null || endDate == null) {
+            prices = repository.findAllBySymbol(symbol);
+        } else if (startDate != null && endDate != null) {
+            prices = repository.findAllBySymbolAndTimestampBetween(symbol,
+                    startDate.atStartOfDay().toInstant(ZoneOffset.UTC),
+                    endDate.plusDays(1).atStartOfDay().toInstant(ZoneOffset.UTC));
+        }
 
         if (prices.isEmpty()) {
             throw new NoSuchElementException("Crypto not found: " + symbol);

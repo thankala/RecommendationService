@@ -1,5 +1,6 @@
 package com.xm.recommendationservice.infrastructure.repository;
 
+import java.time.Instant;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -30,6 +31,20 @@ public class SqlCryptoPriceRepository implements CryptoPriceRepository {
     @Override
     public List<CryptoPrice> findAllBySymbol(String symbol) {
         return repository.findAllBySymbol(symbol).stream()
+                .map(mapper::to)
+                .toList();
+    }
+
+    @Override
+    public List<CryptoPrice> findAllByTimestampBetween(Instant start, Instant end) {
+        return repository.findAllByTimestampBetween(start, end).stream()
+                .map(mapper::to)
+                .toList();
+    }
+
+    @Override
+    public List<CryptoPrice> findAllBySymbolAndTimestampBetween(String symbol, Instant start, Instant end) {
+        return repository.findAllBySymbolAndTimestampBetween(symbol, start, end).stream()
                 .map(mapper::to)
                 .toList();
     }

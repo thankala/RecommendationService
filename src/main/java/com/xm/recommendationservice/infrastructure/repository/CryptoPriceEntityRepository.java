@@ -16,6 +16,10 @@ public interface CryptoPriceEntityRepository extends JpaRepository<CryptoPriceEn
 
     List<CryptoPriceEntity> findAllBySymbol(String symbol);
 
+    List<CryptoPriceEntity> findAllByTimestampBetween(Instant start, Instant end);
+
+    List<CryptoPriceEntity> findAllBySymbolAndTimestampBetween(String symbol, Instant start, Instant end);
+
     @Modifying
     @Query(value = "INSERT INTO crypto_prices (timestamp, symbol, price) " +
             "VALUES (:timestamp, :symbol, :price) " +
