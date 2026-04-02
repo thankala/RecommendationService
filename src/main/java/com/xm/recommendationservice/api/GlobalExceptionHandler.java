@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.xm.recommendationservice.api.responses.ApiErrorResponse;
 
@@ -17,6 +18,11 @@ import lombok.extern.slf4j.Slf4j;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity<ApiErrorResponse> handleNoHandlerFoundException(NoHandlerFoundException ex) {
+    return buildErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+}
 
     @ExceptionHandler(InvalidParameterException.class)
     public ResponseEntity<ApiErrorResponse> handleInvalidParameter(InvalidParameterException ex) {

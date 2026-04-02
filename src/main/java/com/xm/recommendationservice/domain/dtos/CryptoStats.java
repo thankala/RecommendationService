@@ -1,16 +1,11 @@
-package com.xm.recommendationservice.application;
+package com.xm.recommendationservice.domain.dtos;
 
 import java.time.Instant;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
+@Builder
 public class CryptoStats {
     private String symbol;
     private double oldest;

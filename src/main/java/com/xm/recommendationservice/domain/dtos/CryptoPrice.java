@@ -1,14 +1,11 @@
-package com.xm.recommendationservice.domain;
+package com.xm.recommendationservice.domain.dtos;
 
 import lombok.*;
 
 import java.time.Instant;
 
-@Getter
-@Setter
+@Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class CryptoPrice {
     private Instant timestamp;
     private String symbol;
