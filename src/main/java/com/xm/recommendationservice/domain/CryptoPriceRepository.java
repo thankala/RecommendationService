@@ -5,9 +5,12 @@ import java.util.List;
 import java.util.Optional;
 
 import com.xm.recommendationservice.domain.dtos.CryptoNormalizedRange;
+import com.xm.recommendationservice.domain.dtos.CryptoPrice;
 import com.xm.recommendationservice.domain.dtos.CryptoStats;
 
 public interface CryptoPriceRepository {
+
+    void batchInsertIgnoreDuplicates(List<CryptoPrice> cryptoPrices);
 
     Optional<CryptoStats> getStatsBySymbolAndTimestampBetween(String symbol, Instant start, Instant end);
 

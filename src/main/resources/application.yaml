@@ -23,5 +23,7 @@ spring:
       port: 6379
 
 crypto:
-  loader:
-    folder: ${CRYPTO_PRICES_FOLDER_PATH:./src/main/resources/prices}
+  batch:
+    db:
+      insert: 100
+    folder: ${CRYPTO_PRICES_FOLDER_PATH:./src/main/resources/prices}    
