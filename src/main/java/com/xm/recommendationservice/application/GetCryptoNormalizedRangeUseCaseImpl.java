@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -20,15 +21,10 @@ public class GetCryptoNormalizedRangeUseCaseImpl implements GetCryptoNormalizedR
     private final CryptoPriceRepository repository;
 
     public List<CryptoNormalizedRange> getAllNormalizedRanges(LocalDate startDate, LocalDate endDate) {
-        Instant start = null;
-        Instant end = null;
-
-        if (startDate != null && endDate != null) {
-            start = startDate.atStartOfDay().toInstant(ZoneOffset.UTC);
-            end = endDate.plusDays(1).atStartOfDay().toInstant(ZoneOffset.UTC);
-        } else if (startDate != null || endDate != null) {
-            throw new InvalidParameterException("Both start and end dates must be provided");
-        }
+        Instant start = Optional.ofNullable(startDate).map(s -> s.atStartOfDay().toInstant(ZoneOffset.UTC))
+                .orElse(null);
+        Instant end = Optional.ofNullable(endDate).map(e -> e.plusDays(1).atStartOfDay().toInstant(ZoneOffset.UTC))
+                .orElse(null);
 
         return repository.getAllNormalizedRangesBetween(start, end);
     }

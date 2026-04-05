@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidParameterException.class)
     public ResponseEntity<ApiErrorResponse> handleInvalidParameter(InvalidParameterException ex) {
-        return buildErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
@@ -35,8 +35,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<ApiErrorResponse> handleIllegalArgument(NoSuchElementException ex) {
-        return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    public ResponseEntity<ApiErrorResponse> handleNotFound(NoSuchElementException ex) {
+        return buildErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
     @ExceptionHandler(Exception.class)

@@ -10,6 +10,6 @@ import lombok.*;
 public class CryptoNormalizedRange {
     private String symbol;
     private double normalizedRange;
-    private Instant startDate;
-    private Instant endDate;
+    private Instant oldestTimestamp;
+    private Instant newestTimestamp;
 }

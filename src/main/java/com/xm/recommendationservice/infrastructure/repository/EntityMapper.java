@@ -44,6 +44,8 @@ public class EntityMapper {
         return CryptoNormalizedRange.builder()
                 .symbol(projection.getSymbol())
                 .normalizedRange(projection.getNormalizedRange())
+                .oldestTimestamp(projection.getOldestTimestamp())
+                .newestTimestamp(projection.getNewestTimestamp())
                 .build();
     }
 }
